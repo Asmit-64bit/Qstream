@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  /* Cinematic Color Palette */
+  --netflix-red: #e50914;
+  --netflix-red-hover: #ff1e27;
+  --netflix-black: #0c0c0c;
+  --netflix-dark-grey: #141414;
+  --netflix-medium-grey: #232323;
+  --netflix-light-grey: #a3a3a3;
+  --netflix-white: #ffffff;
+  
+  --bg-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(12, 12, 12, 0.95) 70%, #0c0c0c 100%);
+  --card-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+  --neon-glow: 0 0 25px rgba(229, 9, 20, 0.45);
+  --glass-panel: rgba(20, 20, 20, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: blur(20px);
+  
+  /* Fonts */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Outfit', system-ui, -apple-system, sans-serif;
+  
+  /* Transitions */
+  --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-fast: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--netflix-black);
+  color: var(--netflix-white);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar for premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--netflix-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--netflix-medium-grey);
+  border-radius: 4px;
+  transition: var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--netflix-red);
+  box-shadow: 0 0 8px rgba(229, 9, 20, 0.5);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+button, input {
+  font-family: inherit;
+}
+
+/* Layout App Shell */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Common Interactive Utility Styles */
+.btn-netflix {
+  background-color: var(--netflix-red);
+  color: var(--netflix-white);
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(229, 9, 20, 0.2);
+}
+
+.btn-netflix:hover {
+  background-color: var(--netflix-red-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--neon-glow);
+}
+
+.btn-netflix:active {
+  transform: translateY(1px);
+}
+
+.btn-secondary {
+  background-color: rgba(109, 109, 110, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--netflix-white);
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.btn-secondary:active {
+  transform: translateY(1px);
+}
