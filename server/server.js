@@ -30,7 +30,9 @@ const loadEnvFile = () => {
 
 loadEnvFile();
 
-const DB_PATH = path.join(__dirname, 'db.json');
+const DB_PATH = process.env.VERCEL === '1'
+  ? path.join(process.cwd(), 'server', 'db.json')
+  : path.join(__dirname, 'db.json');
 const JWT_SECRET = 'qstream_clone_secret_key_2026';
 const TMDB_API_BASE = 'https://api.themoviedb.org/3';
 const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w780';
@@ -171,22 +173,28 @@ const uniqueMovies = (items) => {
   });
 };
 
-// --- Database Helper Methods ---
+// --- Database Helper Methods (with in-memory cache for Vercel Serverless) ---
+let dbCache = null;
+
 const readDB = () => {
+  if (dbCache) return dbCache;
   try {
     if (!fs.existsSync(DB_PATH)) {
-      // Return fresh initialized state if missing
-      return { users: [], profiles: [], watchlists: [] };
+      dbCache = { users: [], profiles: [], watchlists: [] };
+      return dbCache;
     }
     const data = fs.readFileSync(DB_PATH, 'utf8');
-    return JSON.parse(data);
+    dbCache = JSON.parse(data);
+    return dbCache;
   } catch (error) {
     console.error('Error reading local JSON database:', error);
-    return { users: [], profiles: [], watchlists: [] };
+    dbCache = { users: [], profiles: [], watchlists: [] };
+    return dbCache;
   }
 };
 
 const writeDB = (data) => {
+  dbCache = data;
   try {
     fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), 'utf8');
     return true;
@@ -518,10 +526,14 @@ app.post('/api/watchlist/:profileId', authenticateToken, (req, res) => {
   res.json({ success: true, isAdded });
 });
 
-// Start Express
-app.listen(PORT, () => {
-  console.log(`===============================================`);
-  console.log(`  QStream API Backend is running on port ${PORT} `);
-  console.log(`  Local Database Path: ${DB_PATH}             `);
-  console.log(`===============================================`);
-});
+// Start Express (only if not running under Vercel Serverless environment)
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, () => {
+    console.log(`===============================================`);
+    console.log(`  QStream API Backend is running on port ${PORT} `);
+    console.log(`  Local Database Path: ${DB_PATH}             `);
+    console.log(`===============================================`);
+  });
+}
+
+export default app;
