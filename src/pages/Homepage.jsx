@@ -609,14 +609,25 @@ function Homepage({ onLogout }) {
       return;
     }
 
+    // Find the movie title to sync all duplicate entries on the client
+    let movieTitle = '';
+    for (const row of movieRows) {
+      const found = row.movies.find(m => m.id === movieId);
+      if (found) {
+        movieTitle = found.title;
+        break;
+      }
+    }
+
     try {
       const res = await api.toggleWatchlist(activeProfileId, movieId);
       
-      // Update frontend state immediately to reflect toggle
+      // Update frontend state immediately for all movies sharing the same title
       setMovieRows(prevRows => prevRows.map(row => ({
         ...row,
         movies: row.movies.map(movie => {
-          if (movie.id === movieId) {
+          const matchTitle = movieTitle && movie.title.toLowerCase().trim() === movieTitle.toLowerCase().trim();
+          if (movie.id === movieId || matchTitle) {
             return { ...movie, isAdded: res.isAdded };
           }
           return movie;
@@ -666,12 +677,13 @@ function Homepage({ onLogout }) {
       const query = searchQuery.toLowerCase();
       const allMovies = movieRows.flatMap(r => r.movies);
       
-      // Deduplicate movies by ID
+      // Deduplicate movies by title to prevent duplicates in search results
       const uniqueMovies = [];
       const seen = new Set();
       for (const m of allMovies) {
-        if (!seen.has(m.id)) {
-          seen.add(m.id);
+        const titleKey = m.title.toLowerCase().trim();
+        if (!seen.has(titleKey)) {
+          seen.add(titleKey);
           uniqueMovies.push(m);
         }
       }
@@ -707,12 +719,15 @@ function Homepage({ onLogout }) {
     
     if (activeTab === 'My List') {
       const allAdded = [];
-      const seen = new Set();
+      const seenTitles = new Set();
       for (const row of movieRows) {
         for (const m of row.movies) {
-          if (m.isAdded && !seen.has(m.id)) {
-            seen.add(m.id);
-            allAdded.push(m);
+          if (m.isAdded) {
+            const titleKey = m.title.toLowerCase().trim();
+            if (!seenTitles.has(titleKey)) {
+              seenTitles.add(titleKey);
+              allAdded.push(m);
+            }
           }
         }
       }

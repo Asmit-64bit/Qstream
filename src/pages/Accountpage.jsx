@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, User, CreditCard, Key, ShieldAlert, Trash2, Edit2, CheckCircle, Eye, EyeOff } from 'lucide-react';
+import { ArrowLeft, User, Key, ShieldAlert, Trash2, Edit2, CheckCircle, Eye, EyeOff, Sliders } from 'lucide-react';
 import { api } from '../services/api.js';
 import netflixLogo from '../assets/netflix-logo.svg';
 import './Accountpage.css';
@@ -31,6 +31,50 @@ function Accountpage() {
   // Active Profile Info (for visual display at the top right)
   const activeAvatar = localStorage.getItem('netflix_selected_avatar') || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80';
   const activeProfileName = localStorage.getItem('netflix_selected_profile') || 'Astro';
+
+  // Media Preferences State
+  const [videoQuality, setVideoQuality] = useState(localStorage.getItem('qstream_video_quality') || 'Auto');
+  const [audioOutput, setAudioOutput] = useState(localStorage.getItem('qstream_audio_output') || 'Auto');
+  const [subtitlesEnabled, setSubtitlesEnabled] = useState(
+    localStorage.getItem('qstream_subtitles_enabled') !== 'false'
+  );
+  const [subtitlesLang, setSubtitlesLang] = useState(localStorage.getItem('qstream_subtitles_lang') || 'English');
+  const [autoplayNext, setAutoplayNext] = useState(
+    localStorage.getItem('qstream_autoplay_next') !== 'false'
+  );
+  const [autoplayPreviews, setAutoplayPreviews] = useState(
+    localStorage.getItem('qstream_autoplay_previews') !== 'false'
+  );
+
+  const handleQualityChange = (val) => {
+    setVideoQuality(val);
+    localStorage.setItem('qstream_video_quality', val);
+  };
+
+  const handleAudioChange = (val) => {
+    setAudioOutput(val);
+    localStorage.setItem('qstream_audio_output', val);
+  };
+
+  const handleSubtitlesToggle = (checked) => {
+    setSubtitlesEnabled(checked);
+    localStorage.setItem('qstream_subtitles_enabled', checked ? 'true' : 'false');
+  };
+
+  const handleSubtitlesLangChange = (val) => {
+    setSubtitlesLang(val);
+    localStorage.setItem('qstream_subtitles_lang', val);
+  };
+
+  const handleAutoplayNextToggle = (checked) => {
+    setAutoplayNext(checked);
+    localStorage.setItem('qstream_autoplay_next', checked ? 'true' : 'false');
+  };
+
+  const handleAutoplayPreviewsToggle = (checked) => {
+    setAutoplayPreviews(checked);
+    localStorage.setItem('qstream_autoplay_previews', checked ? 'true' : 'false');
+  };
 
   useEffect(() => {
     const fetchAccountData = async () => {
@@ -212,27 +256,6 @@ function Accountpage() {
             </div>
           </section>
 
-          {/* Panel 2: Plan & Billing Details */}
-          <section className="account-section-panel">
-            <div className="panel-header">
-              <CreditCard className="panel-icon" size={22} />
-              <h2>Plan Details</h2>
-            </div>
-            
-            <div className="panel-body">
-              <div className="info-row">
-                <div className="info-label">Streaming Plan</div>
-                <div className="info-value plan-value">
-                  Premium Ultra HD (4K + HDR)
-                  <span className="plan-badge">Active</span>
-                </div>
-              </div>
-              <div className="info-row">
-                <div className="info-label">Billing Date</div>
-                <div className="info-value next-billing">Renews automatically via Supabase Auth</div>
-              </div>
-            </div>
-          </section>
 
           {/* Panel 3: Active Profiles */}
           <section className="account-section-panel">
@@ -252,6 +275,108 @@ function Accountpage() {
                     <span className="profile-mini-name">{p.name}</span>
                   </div>
                 ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Panel: Media Preferences */}
+          <section className="account-section-panel">
+            <div className="panel-header">
+              <Sliders className="panel-icon" size={22} />
+              <h2>Media Preferences</h2>
+            </div>
+            
+            <div className="panel-body preferences-panel-body">
+              <p className="preferences-sub">Adjust playback quality, audio configurations, and autoplay behaviors.</p>
+              
+              <div className="pref-row">
+                <div className="pref-control-group">
+                  <label className="pref-label">Video Quality</label>
+                  <select 
+                    className="pref-select" 
+                    value={videoQuality} 
+                    onChange={e => handleQualityChange(e.target.value)}
+                  >
+                    <option value="Auto">Auto (Adjusts dynamically)</option>
+                    <option value="High">High (Ultra HD/HDR - uses more data)</option>
+                    <option value="Medium">Medium (Full HD 1080p)</option>
+                    <option value="Low">Low (Data Saver)</option>
+                  </select>
+                </div>
+
+                <div className="pref-control-group">
+                  <label className="pref-label">Audio Output</label>
+                  <select 
+                    className="pref-select" 
+                    value={audioOutput} 
+                    onChange={e => handleAudioChange(e.target.value)}
+                  >
+                    <option value="Auto">Auto (Stereo)</option>
+                    <option value="Dolby5.1">Dolby Digital 5.1 Surround</option>
+                    <option value="Atmos">Dolby Atmos Cinematic</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="pref-row">
+                <div className="pref-control-group">
+                  <label className="pref-label">Subtitle Language</label>
+                  <select 
+                    className="pref-select" 
+                    value={subtitlesLang} 
+                    onChange={e => handleSubtitlesLangChange(e.target.value)}
+                    disabled={!subtitlesEnabled}
+                  >
+                    <option value="English">English</option>
+                    <option value="Spanish">Spanish (Español)</option>
+                    <option value="French">French (Français)</option>
+                    <option value="German">German (Deutsch)</option>
+                  </select>
+                </div>
+
+                <div className="pref-toggle-group">
+                  <span className="pref-toggle-label">Subtitles</span>
+                  <label className="switch">
+                    <input 
+                      type="checkbox" 
+                      checked={subtitlesEnabled} 
+                      onChange={e => handleSubtitlesToggle(e.target.checked)}
+                    />
+                    <span className="slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div className="pref-toggle-row">
+                <div className="pref-toggle-card">
+                  <div className="pref-toggle-details">
+                    <span className="pref-card-title">Autoplay Next Episode</span>
+                    <p className="pref-card-desc">Automatically play the next episode of a series when the current one ends.</p>
+                  </div>
+                  <label className="switch">
+                    <input 
+                      type="checkbox" 
+                      checked={autoplayNext} 
+                      onChange={e => handleAutoplayNextToggle(e.target.checked)}
+                    />
+                    <span className="slider"></span>
+                  </label>
+                </div>
+
+                <div className="pref-toggle-card">
+                  <div className="pref-toggle-details">
+                    <span className="pref-card-title">Autoplay Previews</span>
+                    <p className="pref-card-desc">Play video previews and highlights automatically while browsing the catalog.</p>
+                  </div>
+                  <label className="switch">
+                    <input 
+                      type="checkbox" 
+                      checked={autoplayPreviews} 
+                      onChange={e => handleAutoplayPreviewsToggle(e.target.checked)}
+                    />
+                    <span className="slider"></span>
+                  </label>
+                </div>
               </div>
             </div>
           </section>

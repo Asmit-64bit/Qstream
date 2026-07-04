@@ -179,29 +179,6 @@
   font-size: 15px;
 }
 
-.plan-value {
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.plan-badge {
-  background: rgba(45, 229, 109, 0.15);
-  color: #2de56d;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1px solid rgba(45, 229, 109, 0.2);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.next-billing {
-  color: #86868b;
-  font-size: 14px;
-}
 
 /* Edit value button */
 .edit-value-btn {
@@ -578,3 +555,180 @@
     justify-content: center;
   }
 }
+
+/* --- Media Preferences --- */
+.preferences-sub {
+  color: #86868b;
+  font-size: 14px;
+  margin: -5px 0 20px 0;
+}
+
+.pref-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.pref-control-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pref-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #86868b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pref-select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 14px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.pref-select option {
+  background-color: #141414;
+  color: #ffffff;
+}
+
+.pref-select:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #e50914;
+  box-shadow: 0 0 10px rgba(229, 9, 20, 0.2);
+}
+
+.pref-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pref-toggle-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex: 1;
+  padding-top: 24px;
+}
+
+.pref-toggle-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f5f5f7;
+}
+
+.pref-toggle-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.pref-toggle-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 16px 20px;
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.pref-toggle-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.pref-toggle-details {
+  flex-grow: 1;
+}
+
+.pref-card-title {
+  font-weight: 600;
+  font-size: 15px;
+  color: #fff;
+  display: block;
+}
+
+.pref-card-desc {
+  font-size: 13px;
+  color: #86868b;
+  margin: 4px 0 0 0;
+  line-height: 1.4;
+}
+
+/* Custom Switch Toggle (duplicated from Homepage.css for Account page isolation) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider {
+  background-color: #e50914;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+@media (max-width: 600px) {
+  .pref-row {
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .pref-toggle-group {
+    padding-top: 0;
+  }
+  .pref-toggle-card {
+    padding: 14px 16px;
+  }
+}
+

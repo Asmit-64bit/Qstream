@@ -42,7 +42,7 @@ function HeroBanner({ onPlayClick }) {
       </div>
 
       {/* Ambient controls */}
-      <div style={{ position: 'absolute', right: '4%', bottom: '120px', zIndex: '10', display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div className="hero-ambient-controls">
         <button
           onClick={() => setIsMuted(!isMuted)}
           className="control-btn"
@@ -51,15 +51,7 @@ function HeroBanner({ onPlayClick }) {
         >
           {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
         </button>
-        <span style={{
-          backgroundColor: 'rgba(51, 51, 51, 0.6)',
-          borderLeft: '3px solid #ccc',
-          padding: '6px 30px 6px 12px',
-          fontSize: '15px',
-          fontWeight: '600',
-          color: '#fff',
-          display: 'inline-block'
-        }}>
+        <span className="hero-rating-badge">
           16+
         </span>
       </div>

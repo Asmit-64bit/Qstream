@@ -24,6 +24,54 @@ function Navbar({ onLogout, activeTab, setActiveTab, searchQuery, setSearchQuery
     return localStorage.getItem('netflix_selected_avatar') || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&h=100&q=80';
   });
 
+  // Notifications State
+  const [showNotifications, setShowNotifications] = useState(false);
+  const notificationRef = useRef(null);
+
+  const [notifications, setNotifications] = useState([
+  ]);
+
+  const unreadCount = useMemo(() => notifications.filter(n => n.isUnread).length, [notifications]);
+
+  // Click outside to close notification dropdown
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (notificationRef.current && !notificationRef.current.contains(e.target)) {
+        setShowNotifications(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleMarkAllRead = () => {
+    setNotifications(prev => prev.map(n => ({ ...n, isUnread: false })));
+  };
+
+  const handleNotificationItemClick = (id) => {
+    setNotifications(prev => prev.map(n => n.id === id ? { ...n, isUnread: false } : n));
+    setShowNotifications(false);
+  };
+
+  // Mobile Browse Menu state
+  const [showBrowseMenu, setShowBrowseMenu] = useState(false);
+  const browseRef = useRef(null);
+
+  // Click outside to close mobile browse menu
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (browseRef.current && !browseRef.current.contains(e.target)) {
+        setShowBrowseMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const otherProfiles = useMemo(() => {
     const saved = localStorage.getItem('netflix_profiles');
     if (saved) {
@@ -105,6 +153,27 @@ function Navbar({ onLogout, activeTab, setActiveTab, searchQuery, setSearchQuery
           <li className={`nav-item ${activeTab === 'New & Popular' ? 'active' : ''}`} onClick={() => handleTabClick('New & Popular')}>New & Popular</li>
           <li className={`nav-item ${activeTab === 'My List' ? 'active' : ''}`} onClick={() => handleTabClick('My List')}>My List</li>
         </ul>
+
+        {/* Mobile Browse Dropdown */}
+        <div className="mobile-browse-container" ref={browseRef}>
+          <button className="mobile-browse-btn" onClick={() => setShowBrowseMenu(!showBrowseMenu)}>
+            <span>Browse</span>
+            <ChevronDown size={14} className={`browse-caret ${showBrowseMenu ? 'open' : ''}`} />
+          </button>
+          
+          {showBrowseMenu && (
+            <div className="mobile-browse-menu">
+              <div className="mobile-browse-arrow"></div>
+              <ul className="mobile-browse-links">
+                <li className={`mobile-browse-item ${activeTab === 'Home' ? 'active' : ''}`} onClick={() => { handleTabClick('Home'); setShowBrowseMenu(false); }}>Home</li>
+                <li className={`mobile-browse-item ${activeTab === 'TV Shows' ? 'active' : ''}`} onClick={() => { handleTabClick('TV Shows'); setShowBrowseMenu(false); }}>TV Shows</li>
+                <li className={`mobile-browse-item ${activeTab === 'Movies' ? 'active' : ''}`} onClick={() => { handleTabClick('Movies'); setShowBrowseMenu(false); }}>Movies</li>
+                <li className={`mobile-browse-item ${activeTab === 'New & Popular' ? 'active' : ''}`} onClick={() => { handleTabClick('New & Popular'); setShowBrowseMenu(false); }}>New & Popular</li>
+                <li className={`mobile-browse-item ${activeTab === 'My List' ? 'active' : ''}`} onClick={() => { handleTabClick('My List'); setShowBrowseMenu(false); }}>My List</li>
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="navbar-right">
@@ -125,11 +194,63 @@ function Navbar({ onLogout, activeTab, setActiveTab, searchQuery, setSearchQuery
 
         <span className="nav-item" style={{ cursor: 'default' }}>{currentProfileName}</span>
 
-        {/* Bell notifications */}
-        <button className="nav-icon">
-          <Bell size={20} />
-          <span className="notification-badge">3</span>
-        </button>
+        {/* Bell notifications with interactive dropdown */}
+        <div 
+          className="notification-container" 
+          ref={notificationRef}
+          onMouseEnter={() => setShowNotifications(true)}
+          onMouseLeave={() => setShowNotifications(false)}
+        >
+          <button 
+            className="notification-btn" 
+            aria-label="View notifications"
+            aria-haspopup="true"
+            aria-expanded={showNotifications}
+          >
+            <Bell size={20} />
+            {unreadCount > 0 && (
+              <span className="notification-badge">{unreadCount}</span>
+            )}
+          </button>
+
+          {showNotifications && (
+            <div className="notifications-dropdown-wrapper">
+              <div className="notifications-dropdown-menu">
+                <div className="notifications-header">
+                  <h3>Notifications</h3>
+                  {unreadCount > 0 && (
+                    <button className="mark-read-btn" onClick={handleMarkAllRead}>
+                      Mark all as read
+                    </button>
+                  )}
+                </div>
+                <div className="notifications-list">
+                  {notifications.length > 0 ? (
+                    notifications.map((notif) => (
+                      <div 
+                        key={notif.id} 
+                        className={`notification-item ${notif.isUnread ? 'unread' : ''}`}
+                        onClick={() => handleNotificationItemClick(notif.id)}
+                      >
+                        <img src={notif.image} alt="" className="notification-item-img" />
+                        <div className="notification-item-content">
+                          <span className="notification-item-title">{notif.title}</span>
+                          <span className="notification-item-desc">{notif.message}</span>
+                          <span className="notification-item-time">{notif.time}</span>
+                        </div>
+                        {notif.isUnread && <span className="notification-unread-dot" />}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="no-notifications">
+                      No new notifications
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* Dynamic User Profile Dropdown */}
         <div className="profile-dropdown">
@@ -180,7 +301,18 @@ function Navbar({ onLogout, activeTab, setActiveTab, searchQuery, setSearchQuery
               <Settings size={16} />
               <span>Account</span>
             </div>
-            <div className="dropdown-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div 
+              className="dropdown-item" 
+              onClick={() => {
+                if (window.location.pathname !== '/browse') {
+                  navigate('/browse');
+                }
+                setTimeout(() => {
+                  window.dispatchEvent(new CustomEvent('open-help-center'));
+                }, 150);
+              }}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+            >
               <HelpCircle size={16} />
               <span>Help Center</span>
             </div>
