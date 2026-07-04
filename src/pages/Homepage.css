@@ -788,12 +788,42 @@
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.tv-selector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.season-dropdown {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.season-dropdown:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.season-dropdown option {
+  background-color: #141414;
+  color: #fff;
+}
+
 .tv-selector-label {
   font-family: var(--font-heading);
   font-size: 16px;
   font-weight: 700;
   display: block;
-  margin-bottom: 16px;
+  margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: #ccc;

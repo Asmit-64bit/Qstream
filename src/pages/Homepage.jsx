@@ -428,43 +428,114 @@ const FALLBACK_CATEGORIES = [
 // Real-time metadata for television episodes
 const TV_EPISODES = {
   // Stranger Things (tmdbId = '66732')
-  '66732': [
-    {
-      episodeNum: 1,
-      title: "Chapter One: The Vanishing of Will Byers",
-      duration: "48m",
-      description: "On his way home from a friend's house, young Will sees something terrifying. Nearby, a secret government lab harbors a sinister gateway.",
-      thumbnail: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=300&h=170&q=80"
-    },
-    {
-      episodeNum: 2,
-      title: "Chapter Two: The Weirdo on Maple Street",
-      duration: "55m",
-      description: "Lucas, Mike and Dustin try to talk to the girl they found in the woods. Chief Hopper questions a deeply anxious Joyce about Will's eerie phone calls.",
-      thumbnail: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=300&h=170&q=80"
-    },
-    {
-      episodeNum: 3,
-      title: "Chapter Three: Holly, Jolly",
-      duration: "51m",
-      description: "An increasingly frantic Joyce tries to communicate with Will via Christmas light lines. Nancy investigates her best friend Barbara's sudden disappearance.",
-      thumbnail: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300&h=170&q=80"
-    },
-    {
-      episodeNum: 4,
-      title: "Chapter Four: The Body",
-      duration: "50m",
-      description: "Refusing to believe Will is dead despite the search crew findings, Joyce tries to connect with her son. The boys give Eleven a classic retro makeover.",
-      thumbnail: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=300&h=170&q=80"
-    },
-    {
-      episodeNum: 5,
-      title: "Chapter Five: The Flea and the Acrobat",
-      duration: "53m",
-      description: "Hopper breaks into the laboratory to search for Will. The boys ask Mr. Clarke about traveling to alternate dimensions to track down the gate.",
-      thumbnail: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=300&h=170&q=80"
-    }
-  ],
+  '66732': {
+    '1': [
+      {
+        episodeNum: 1,
+        title: "Chapter One: The Vanishing of Will Byers",
+        duration: "48m",
+        description: "On his way home from a friend's house, young Will sees something terrifying. Nearby, a secret government lab harbors a sinister gateway.",
+        thumbnail: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=300&h=170&q=80"
+      },
+      {
+        episodeNum: 2,
+        title: "Chapter Two: The Weirdo on Maple Street",
+        duration: "55m",
+        description: "Lucas, Mike and Dustin try to talk to the girl they found in the woods. Chief Hopper questions a deeply anxious Joyce about Will's eerie phone calls.",
+        thumbnail: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=300&h=170&q=80"
+      },
+      {
+        episodeNum: 3,
+        title: "Chapter Three: Holly, Jolly",
+        duration: "51m",
+        description: "An increasingly frantic Joyce tries to communicate with Will via Christmas light lines. Nancy investigates her best friend Barbara's sudden disappearance.",
+        thumbnail: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300&h=170&q=80"
+      },
+      {
+        episodeNum: 4,
+        title: "Chapter Four: The Body",
+        duration: "50m",
+        description: "Refusing to believe Will is dead despite the search crew findings, Joyce tries to connect with her son. The boys give Eleven a classic retro makeover.",
+        thumbnail: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=300&h=170&q=80"
+      },
+      {
+        episodeNum: 5,
+        title: "Chapter Five: The Flea and the Acrobat",
+        duration: "53m",
+        description: "Hopper breaks into the laboratory to search for Will. The boys ask Mr. Clarke about traveling to alternate dimensions to track down the gate.",
+        thumbnail: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=300&h=170&q=80"
+      }
+    ],
+    '2': [
+      {
+        episodeNum: 1,
+        title: "Chapter One: MADMAX",
+        duration: "48m",
+        description: "As the town prepares for Halloween, a high-scoring newcomer shakes up things at the local arcade. A skeptical Hopper inspects a field of rotting pumpkins.",
+        thumbnail: "https://images.unsplash.com/photo-1511447333015-45b65e60f6d5?auto=format&fit=crop&w=300&h=170&q=80"
+      },
+      {
+        episodeNum: 2,
+        title: "Chapter Two: Trick or Treat, Freak",
+        duration: "56m",
+        description: "After Will sees something terrible on trick-or-treat night, Mike wonders if Eleven is still out there. Nancy struggles with the truth about Barb.",
+        thumbnail: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=300&h=170&q=80"
+      },
+      {
+        episodeNum: 3,
+        title: "Chapter Three: The Pollywog",
+        duration: "51m",
+        description: "Dustin adopts a strange, slimy new pet, and Eleven grows increasingly frustrated. Well-meaning Bob urges Will to stand up to his fears.",
+        thumbnail: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300&h=170&q=80"
+      }
+    ],
+    '3': [
+      {
+        episodeNum: 1,
+        title: "Chapter One: Suzie, Do You Copy?",
+        duration: "50m",
+        description: "Summer brings new jobs and budding romance to Hawkins. But the radio transmitter picks up a Russian broadcast, and Dustin senses a strange threat.",
+        thumbnail: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=300&h=170&q=80"
+      },
+      {
+        episodeNum: 2,
+        title: "Chapter Two: The Mall Rats",
+        duration: "50m",
+        description: "Nancy and Jonathan follow a lead, while Steve and Robin sign up for a secret mission. Max and Eleven go shopping. Billy has a terrifying vision.",
+        thumbnail: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=300&h=170&q=80"
+      },
+      {
+        episodeNum: 3,
+        title: "Chapter Three: The Case of the Missing Lifeguard",
+        duration: "49m",
+        description: "With Eleven and Max searching for Billy, Will plans a day without girls. Steve and Dustin run a stakeout, and Joyce fears for Hopper's safety.",
+        thumbnail: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=300&h=170&q=80"
+      }
+    ],
+    '4': [
+      {
+        episodeNum: 1,
+        title: "Chapter One: The Hellfire Club",
+        duration: "1h 18m",
+        description: "Now in high school, Dustin and Mike join a D&D club. Meanwhile, a dark threat looms over Hawkins, and a strange death sends shockwaves.",
+        thumbnail: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=300&h=170&q=80"
+      },
+      {
+        episodeNum: 2,
+        title: "Chapter Two: Vecna's Curse",
+        duration: "1h 17m",
+        description: "Mike travels to California to visit Eleven. Meanwhile, in Hawkins, Max tries to understand her strange visions as police hunt for answers.",
+        thumbnail: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=300&h=170&q=80"
+      },
+      {
+        episodeNum: 3,
+        title: "Chapter Three: The Monster and the Superhero",
+        duration: "1h 3m",
+        description: "Eleven faces consequences in California. In Hawkins, the group searches for clues about the demonic entity that has been terrorizing the town.",
+        thumbnail: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300&h=170&q=80"
+      }
+    ]
+  },
   // Dark (tmdbId = '70523')
   '70523': [
     {
@@ -536,7 +607,110 @@ const TV_EPISODES = {
       description: "David confronts a legendary crew of local edgerunners headed by the cyber-implanted Maine, demanding a trial to prove his metal as a mercenary.",
       thumbnail: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=300&h=170&q=80"
     }
-  ]
+  ],
+  // Squid Game (tmdbId = '93405')
+  '93405': [
+    {
+      episodeNum: 1,
+      title: "Red Light, Green Light",
+      duration: "60m",
+      description: "Hoping to win easy money, Gi-hun agrees to play a mysterious game. But the first round turns into an unexpected, bloody nightmare.",
+      thumbnail: "https://images.unsplash.com/photo-1511447333015-45b65e60f6d5?auto=format&fit=crop&w=300&h=170&q=80"
+    },
+    {
+      episodeNum: 2,
+      title: "Hell",
+      duration: "63m",
+      description: "Split on whether to continue the game or walk away, the players hold a vote. But the realities of their debt-ridden lives outside prove just as brutal.",
+      thumbnail: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=300&h=170&q=80"
+    },
+    {
+      episodeNum: 3,
+      title: "The Man with the Umbrella",
+      duration: "54m",
+      description: "Players enter the second round, which involves extracting a shape from a honeycomb. Gi-hun uses a clever trick to save his life.",
+      thumbnail: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300&h=170&q=80"
+    }
+  ],
+  // Crash Landing on You (tmdbId = '94796')
+  '94796': [
+    {
+      episodeNum: 1,
+      title: "Episode 1",
+      duration: "1h 10m",
+      description: "South Korean heiress Yoon Se-ri is caught in a sudden storm while paragliding and accidentally crashes over the DMZ border into North Korea.",
+      thumbnail: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=300&h=170&q=80"
+    },
+    {
+      episodeNum: 2,
+      title: "Episode 2",
+      duration: "1h 15m",
+      description: "North Korean army officer Ri Jeong-hyeok decides to hide Se-ri in his home while trying to devise a secure plan to smuggle her back home.",
+      thumbnail: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=300&h=170&q=80"
+    }
+  ],
+  // All of Us Are Dead (tmdbId = '99966')
+  '99966': [
+    {
+      episodeNum: 1,
+      title: "Episode 1",
+      duration: "1h 2m",
+      description: "A student is bitten by a lab hamster, triggering a zombie virus outbreak. High schoolers are trapped and must fight for survival.",
+      thumbnail: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=300&h=170&q=80"
+    },
+    {
+      episodeNum: 2,
+      title: "Episode 2",
+      duration: "1h 5m",
+      description: "As the infected multiply rapidly, students barricade themselves in a classroom and try to find a way to contact the authorities.",
+      thumbnail: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=300&h=170&q=80"
+    }
+  ],
+  // Business Proposal (tmdbId = '154825')
+  '154825': [
+    {
+      episodeNum: 1,
+      title: "Episode 1",
+      duration: "60m",
+      description: "Ha-ri agrees to go on a blind date in place of her wealthy friend to get rejected, only to discover the date is her company's new CEO.",
+      thumbnail: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300&h=170&q=80"
+    },
+    {
+      episodeNum: 2,
+      title: "Episode 2",
+      duration: "60m",
+      description: "CEO Tae-moo is determined to marry his blind date to stop his grandfather's nagging, forcing Ha-ri to play along with a fake identity.",
+      thumbnail: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=300&h=170&q=80"
+    }
+  ],
+  // Kingdom (tmdbId = '70593')
+  '70593': {
+    '1': [
+      {
+        episodeNum: 1,
+        title: "Episode 1",
+        duration: "56m",
+        description: "An outbreak of a mysterious plague begins to spread in the southern province of Dongnae. The crown prince travels to investigate.",
+        thumbnail: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=300&h=170&q=80"
+      },
+      {
+        episodeNum: 2,
+        title: "Episode 2",
+        duration: "56m",
+        description: "Jeong-seok and Seo-bi discover that the bodies of the dead come alive at night, seeking human flesh.",
+        thumbnail: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=300&h=170&q=80"
+      }
+    ],
+    '2': [
+      {
+        episodeNum: 1,
+        title: "Episode 1",
+        duration: "45m",
+        description: "An unexpected setback at Sangju turns the prince's strategy upside down. Seo-bi discovers a critical detail about the plague's behavior.",
+        thumbnail: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300&h=170&q=80"
+      }
+    ]
+  }
 };
 
 function Homepage({ onLogout }) {
@@ -670,6 +844,14 @@ function Homepage({ onLogout }) {
     }));
   };
 
+  const handleSeasonSelect = (seasonNum) => {
+    setActiveStream(prev => ({
+      ...prev,
+      season: seasonNum,
+      episode: 1
+    }));
+  };
+
   // --- Real-time Catalog Filtering Engine ---
   const getFilteredRows = () => {
     // 1. Search Query filtering takes absolute priority
@@ -794,6 +976,7 @@ function Homepage({ onLogout }) {
         activeStream={activeStream} 
         onClose={handleCloseStream} 
         onEpisodeSelect={handleEpisodeSelect} 
+        onSeasonSelect={handleSeasonSelect}
         TV_EPISODES={TV_EPISODES}
       />
     </div>

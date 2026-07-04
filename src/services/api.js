@@ -1,5 +1,50 @@
 import { supabase } from './supabaseClient.js';
 
+// Blacklist of explicit/steamy adult titles to remove sex and nudity content client-side
+const EXPLICIT_TITLE_BLACKLIST = [
+  'damage', 'fifty shades of grey', 'fifty shades darker', 'fifty shades freed',
+  '365 days', '365 days: this day', 'the next 365 days', 'erotic', 'nymphomaniac',
+  'emmanuelle', 'lust', 'deep throat', 'caligula', 'eyes wide shut', 'eroticism', 'shame',
+  'money shot', 'pornhub', 'hot girls wanted', 'sexy', 'porn', 'skin. like. sun.',
+  'nude', 'virgin', 'monika', 'clitoris',
+  'after we collided', 'after we fell', 'after ever happy', 'after everything',
+  '9 songs',
+  'sex', 'erotica', 'nudes', 'naked', 'babygirl', 'the voyeurs', 'deep water',
+  'basic instinct', 'wild things', 'cruel intentions', 'showgirls', 'striptease',
+  'secretary', 'lust caution', 'blue is the warmest color', 'the dreamers',
+  'wild orchid', 'shortbus', 'ken park', 'lucia y el sexo', 'sex and lucia',
+  'y tu mama tambien', 'ai no corrida', 'in the realm of the senses',
+  'tie me up tie me down', 'salò', 'salo', 'sodom', 'erotika', 'erotico',
+  'kamasutra', 'kama sutra'
+];
+
+const isAdultOrSuggestiveContent = (item) => {
+  if (!item) return false;
+  if (item.adult === true) return true;
+
+  const title = (item.title || item.name || '').toLowerCase();
+
+  // Strict check for the exact title 'after' (avoiding blocking After Earth, etc.)
+  if (title.trim() === 'after') return true;
+
+  // Strict exact title matches or word boundary checks
+  const containsBlacklistedTitle = EXPLICIT_TITLE_BLACKLIST.some(black => {
+    const cleanTitle = title.replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
+    const cleanBlack = black.replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
+
+    if (cleanBlack.includes(' ')) {
+      if (cleanTitle.includes(cleanBlack)) return true;
+    } else {
+      const regex = new RegExp(`\\b${black}\\b`, 'i');
+      if (regex.test(title)) return true;
+    }
+    return false;
+  });
+  if (containsBlacklistedTitle) return true;
+
+  return false;
+};
+
 export const api = {
   // --- CATALOG SERVICES ---
 
@@ -49,6 +94,10 @@ export const api = {
     });
 
     data.forEach(item => {
+      // Filter out explicit adult, sex or nudity content
+      if (isAdultOrSuggestiveContent(item)) {
+        return;
+      }
       const cat = item.category;
       if (categoriesMap[cat]) {
         categoriesMap[cat].movies.push({

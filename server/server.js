@@ -116,16 +116,27 @@ const EXPLICIT_TITLE_BLACKLIST = [
   '365 days', '365 days: this day', 'the next 365 days', 'erotic', 'nymphomaniac',
   'emmanuelle', 'lust', 'deep throat', 'caligula', 'eyes wide shut', 'eroticism', 'shame',
   'money shot', 'pornhub', 'hot girls wanted', 'sexy', 'porn', 'skin. like. sun.',
-  'nude', 'virgin', 'monika', 'obsession', 'clitoris',
+  'nude', 'virgin', 'monika', 'clitoris',
   'after we collided', 'after we fell', 'after ever happy', 'after everything',
-  'my fault', 'culpa mia', 'culpa mía', '9 songs'
+  '9 songs',
+  'sex', 'erotica', 'nudes', 'naked', 'babygirl', 'the voyeurs', 'deep water',
+  'basic instinct', 'wild things', 'cruel intentions', 'showgirls', 'striptease',
+  'secretary', 'lust caution', 'blue is the warmest color', 'the dreamers',
+  'wild orchid', 'shortbus', 'ken park', 'lucia y el sexo', 'sex and lucia',
+  'y tu mama tambien', 'ai no corrida', 'in the realm of the senses',
+  'tie me up tie me down', 'salò', 'salo', 'sodom', 'erotika', 'erotico',
+  'kamasutra', 'kama sutra'
 ];
 
 const EXPLICIT_OVERVIEW_KEYWORDS = [
   'erotic drama', 'erotic thriller', 'steamy romance', 'steamy relationship',
   'steamy affair', 'sexual relationship', 'sensual relationship', 'steamy encounters',
   'erotic romance', 'erotic encounter', 'nudity', 'graphic nudity', 'nude', 'suggestive',
-  'sensual', 'sexual scene', 'sexual encounter'
+  'sensual', 'sexual scene', 'sexual encounter', 'sex scene', 'sex scenes', 'nude scene',
+  'nude scenes', 'explicit sex', 'full-frontal nudity', 'full frontal nudity', 'sexual intimacy',
+  'sexual behavior', 'steamy sex', 'steamy scenes', 'erotic adventures', 'sexual desires',
+  'sexual fantasy', 'sexual fantasies', 'sexual pleasure', 'sexual tension', 'sexual elements',
+  'erotic elements', 'erotically charged', 'erotic nature'
 ];
 
 const isAdultOrSuggestiveContent = (item) => {
@@ -139,15 +150,20 @@ const isAdultOrSuggestiveContent = (item) => {
   // Strict check for the exact title 'after' (avoiding blocking After Earth, etc.)
   if (title.trim() === 'after') return true;
 
-  // 1. Strict exact title matches or word boundary/substring checks
+  // 1. Strict exact title matches or word boundary checks
   const containsBlacklistedTitle = EXPLICIT_TITLE_BLACKLIST.some(black => {
-    // Punctuation-insensitive substring check (e.g., 'skin like sun' matches 'Skin. Like. Sun.')
     const cleanTitle = title.replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
     const cleanBlack = black.replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
-    if (cleanTitle.includes(cleanBlack)) return true;
 
-    const regex = new RegExp(`\\b${black}\\b`, 'i');
-    return regex.test(title);
+    if (cleanBlack.includes(' ')) {
+      // For multi-word phrases, a simple punctuation-insensitive substring match works
+      if (cleanTitle.includes(cleanBlack)) return true;
+    } else {
+      // For single words, match only full word boundaries to avoid false positives (e.g. unisex, Essex)
+      const regex = new RegExp(`\\b${black}\\b`, 'i');
+      if (regex.test(title)) return true;
+    }
+    return false;
   });
   if (containsBlacklistedTitle) return true;
 

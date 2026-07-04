@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { X, Play } from 'lucide-react';
 
-function StreamingModal({ activeStream, onClose, onEpisodeSelect, TV_EPISODES }) {
+function StreamingModal({ activeStream, onClose, onEpisodeSelect, onSeasonSelect, TV_EPISODES }) {
   const [selectedSource, setSelectedSource] = useState('vidsrc'); // 'vidlink' | 'vidsrc' | 'vidking'
 
   if (!activeStream) return null;
@@ -33,7 +33,14 @@ function StreamingModal({ activeStream, onClose, onEpisodeSelect, TV_EPISODES })
   // Helper to fetch dynamic episode details
   const getEpisodesList = () => {
     if (TV_EPISODES && TV_EPISODES[tmdbId]) {
-      return TV_EPISODES[tmdbId];
+      const showData = TV_EPISODES[tmdbId];
+      if (Array.isArray(showData)) {
+        return showData;
+      }
+      const activeSeason = season || 1;
+      if (showData[activeSeason]) {
+        return showData[activeSeason];
+      }
     }
     // Fallback if not custom
     return [1, 2, 3, 4, 5, 6, 7, 8].map((num) => ({
@@ -43,6 +50,17 @@ function StreamingModal({ activeStream, onClose, onEpisodeSelect, TV_EPISODES })
       description: "As the mystery deepens, unexpected alliances form, secrets unravel, and the characters face critical stakes in this high-intensity segment.",
       thumbnail: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=300&h=170&q=80"
     }));
+  };
+
+  // Helper to get list of season numbers
+  const getSeasonsList = () => {
+    if (TV_EPISODES && TV_EPISODES[tmdbId]) {
+      const showData = TV_EPISODES[tmdbId];
+      if (!Array.isArray(showData)) {
+        return Object.keys(showData).map(Number).sort((a, b) => a - b);
+      }
+    }
+    return [1, 2, 3, 4];
   };
 
   return (
@@ -105,7 +123,18 @@ function StreamingModal({ activeStream, onClose, onEpisodeSelect, TV_EPISODES })
         {/* Episode selector dashboard for TV Shows */}
         {activeStream.type === 'tv' && (
           <div className="tv-selector-container">
-            <span className="tv-selector-label">Episodes (Season 1)</span>
+            <div className="tv-selector-header">
+              <span className="tv-selector-label">Episodes</span>
+              <select 
+                className="season-dropdown"
+                value={activeStream.season || 1}
+                onChange={(e) => onSeasonSelect(Number(e.target.value))}
+              >
+                {getSeasonsList().map((sNum) => (
+                  <option key={sNum} value={sNum}>Season {sNum}</option>
+                ))}
+              </select>
+            </div>
             <div className="episodes-list-column">
               {getEpisodesList().map((ep) => (
                 <div 
