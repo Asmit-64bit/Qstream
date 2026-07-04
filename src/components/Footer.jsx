@@ -97,7 +97,7 @@ function Footer() {
       </button>
 
       <p className="footer-copyright">
-        &copy; 1997-2026 QStream, Inc. and its affiliates. Made with passion for Asmit.
+        &copy; 1997-2026 QStream, Inc. and its affiliates. Made with passion by Asmit.
       </p>
     </footer>
   );

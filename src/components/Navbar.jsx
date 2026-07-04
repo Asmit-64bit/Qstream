@@ -18,7 +18,7 @@ function Navbar({ onLogout, activeTab, setActiveTab, searchQuery, setSearchQuery
 
   // Load current profile credentials and switchers from local storage
   const [currentProfileName] = useState(() => {
-    return localStorage.getItem('netflix_selected_profile') || 'Asmit';
+    return localStorage.getItem('netflix_selected_profile') || 'Guest';
   });
   const [currentProfileAvatar] = useState(() => {
     return localStorage.getItem('netflix_selected_avatar') || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&h=100&q=80';
@@ -172,7 +172,11 @@ function Navbar({ onLogout, activeTab, setActiveTab, searchQuery, setSearchQuery
               <User size={16} />
               <span>Switch Profiles</span>
             </div>
-            <div className="dropdown-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div 
+              className="dropdown-item" 
+              onClick={() => navigate('/account')} 
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+            >
               <Settings size={16} />
               <span>Account</span>
             </div>

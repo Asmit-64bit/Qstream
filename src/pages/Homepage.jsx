@@ -747,8 +747,13 @@ function Homepage({ onLogout }) {
         <HeroBanner onPlayClick={handlePlayClick} />
       )}
 
-      {/* Catalog Grid Section */}
-      <main className="rows-container" style={{ paddingTop: searchQuery.trim() !== '' || activeTab === 'My List' ? '120px' : '0' }}>
+      <main 
+        className="rows-container" 
+        style={{ 
+          paddingTop: searchQuery.trim() !== '' || activeTab === 'My List' ? '120px' : '0',
+          marginTop: searchQuery.trim() !== '' || activeTab === 'My List' ? '0' : '-80px'
+        }}
+      >
         {filteredRows.length === 0 || (filteredRows.length === 1 && filteredRows[0].movies.length === 0) ? (
           <div style={{ padding: '80px 4%', textAlign: 'center', color: 'var(--netflix-light-grey)' }}>
             <h2 style={{ fontSize: '24px', fontWeight: '600', marginBottom: '8px', color: '#fff' }}>No matches found</h2>

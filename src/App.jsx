@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Loginpage from './pages/Loginpage.jsx';
 import Homepage from './pages/Homepage.jsx';
 import Profilepage from './pages/Profilepage.jsx';
+import Accountpage from './pages/Accountpage.jsx';
 import { api } from './services/api.js';
 
 // Breathtaking 3D scale brand intro animation
@@ -133,7 +134,12 @@ function App() {
     setIsTudumPlaying(true);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await api.logout();
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
     setIsAuthenticated(false);
     setSelectedProfile(null);
     localStorage.removeItem('netflix_token');
@@ -204,6 +210,18 @@ function App() {
               ) : (
                 <Homepage onLogout={logout} />
               )
+            ) : (
+              <Navigate to="/" replace />
+            )
+          } 
+        />
+        
+        {/* Account Management Page */}
+        <Route 
+          path="/account" 
+          element={
+            isAuthenticated ? (
+              <Accountpage />
             ) : (
               <Navigate to="/" replace />
             )
